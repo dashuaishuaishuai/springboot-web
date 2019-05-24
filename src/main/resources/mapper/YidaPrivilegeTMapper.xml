@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.web.mapper.YidaPrivilegeTMapper" >
+  <resultMap id="BaseResultMap" type="com.boot.web.module.pojo.YidaPrivilegeT" >
+    <id column="PRIVILEGE_ID" property="privilegeId" jdbcType="VARCHAR" />
+    <result column="PRIVILEGE_TYPE" property="privilegeType" jdbcType="CHAR" />
+    <result column="PRIVILEGE_NAME" property="privilegeName" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PRIVILEGE_STATUS" property="privilegeStatus" jdbcType="VARCHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_MODIFIER" property="lastModifier" jdbcType="VARCHAR" />
+    <result column="LAST_MODIFY_TIME" property="lastModifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PRIVILEGE_ID, PRIVILEGE_TYPE, PRIVILEGE_NAME, DESCRIPTION, PRIVILEGE_STATUS, CREATER, 
+    CREATE_TIME, LAST_MODIFIER, LAST_MODIFY_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from yida_privilege_t
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from yida_privilege_t
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.boot.web.module.pojo.YidaPrivilegeT" >
+    insert into yida_privilege_t (PRIVILEGE_ID, PRIVILEGE_TYPE, PRIVILEGE_NAME, 
+      DESCRIPTION, PRIVILEGE_STATUS, CREATER, 
+      CREATE_TIME, LAST_MODIFIER, LAST_MODIFY_TIME
+      )
+    values (#{privilegeId,jdbcType=VARCHAR}, #{privilegeType,jdbcType=CHAR}, #{privilegeName,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{privilegeStatus,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastModifier,jdbcType=VARCHAR}, #{lastModifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.web.module.pojo.YidaPrivilegeT" >
+    insert into yida_privilege_t
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="privilegeId != null" >
+        PRIVILEGE_ID,
+      </if>
+      <if test="privilegeType != null" >
+        PRIVILEGE_TYPE,
+      </if>
+      <if test="privilegeName != null" >
+        PRIVILEGE_NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="privilegeStatus != null" >
+        PRIVILEGE_STATUS,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="lastModifier != null" >
+        LAST_MODIFIER,
+      </if>
+      <if test="lastModifyTime != null" >
+        LAST_MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="privilegeId != null" >
+        #{privilegeId,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeType != null" >
+        #{privilegeType,jdbcType=CHAR},
+      </if>
+      <if test="privilegeName != null" >
+        #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeStatus != null" >
+        #{privilegeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifier != null" >
+        #{lastModifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.web.module.pojo.YidaPrivilegeT" >
+    update yida_privilege_t
+    <set >
+      <if test="privilegeType != null" >
+        PRIVILEGE_TYPE = #{privilegeType,jdbcType=CHAR},
+      </if>
+      <if test="privilegeName != null" >
+        PRIVILEGE_NAME = #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeStatus != null" >
+        PRIVILEGE_STATUS = #{privilegeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifier != null" >
+        LAST_MODIFIER = #{lastModifier,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null" >
+        LAST_MODIFY_TIME = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.web.module.pojo.YidaPrivilegeT" >
+    update yida_privilege_t
+    set PRIVILEGE_TYPE = #{privilegeType,jdbcType=CHAR},
+      PRIVILEGE_NAME = #{privilegeName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PRIVILEGE_STATUS = #{privilegeStatus,jdbcType=VARCHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      LAST_MODIFIER = #{lastModifier,jdbcType=VARCHAR},
+      LAST_MODIFY_TIME = #{lastModifyTime,jdbcType=TIMESTAMP}
+    where PRIVILEGE_ID = #{privilegeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

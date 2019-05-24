@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:href="@{../static/bootstrap.css}"/>
+    <style type="text/css">
+        body {
+            padding-top: 50px;
+        }
+
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="starter-template">
+        <span th:text="${msg}"></span>
+        <form th:action="@{/login/logout}" method="post">
+            <input type="submit" class="btn btn-primary" value="退出"/>
+        </form>
+    </div>
+    <span shiro:authenticated="false">
+      <span>欢迎您：<span th:text="${msg}"></span></span>
+</span>
+</div>
+</body>
+</html>

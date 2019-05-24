@@ -1,0 +1,33 @@
+# 定义 stages
+stages:
+  - test
+  - build
+  - deploy
+# 定义 job
+job1:
+  stage: test
+  script:
+    - mvn test
+    - echo "I am in test stage"
+  tags:
+    - springboot
+# 定义 job
+job2:
+  stage: build
+  script:
+    - mvn package -Dmaven.test.skip=true
+    - echo "build success"
+  tags:
+      - springboot
+
+job3:
+  stage: deploy
+  script:
+    - mvn package -Dmaven.test.skip=true
+    - cp ./target/springboot-web-0.0.1-SNAPSHOT.jar ./springboot-web-0.0.1-SNAPSHOT.jar
+    - ls -l
+    - nohup sh deploy.sh restart > /dev/null 2>&1 &
+  tags:
+    - springboot
+  only:
+    - master
