@@ -7,13 +7,15 @@
  */
 package com.boot.web.module.user.service.impl;
 
-import com.boot.web.mapper.YidaUserTMapper;
-import com.boot.web.module.pojo.YidaUserT;
+import com.boot.web.mapper.SysUserMapper;
+import com.boot.web.module.entity.SysUser;
 import com.boot.web.module.user.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.Sqls;
 
-import javax.annotation.Resource;
 
 /**
  * 〈一句话功能简述〉
@@ -27,11 +29,14 @@ import javax.annotation.Resource;
 @Transactional
 public class UserServiceImpl implements IUserService {
 
-    @Resource
-    YidaUserTMapper yidaUserTMapper;
+    @Autowired
+    private SysUserMapper userMapper;
 
     @Override
-    public YidaUserT getUserInfoByCount(String account) {
-        return yidaUserTMapper.selectByPrimaryKey(account);
+    public SysUser findByUsername(String username) {
+        Example example = Example.builder(SysUser.class)
+                .where(Sqls.custom().andEqualTo("username",username))
+                .build();
+        return userMapper.selectOneByExample(example);
     }
 }

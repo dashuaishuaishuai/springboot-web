@@ -7,6 +7,7 @@
  */
 package com.boot.web.framework.shiro.pojo;
 
+import lombok.Data;
 import org.crazycake.shiro.AuthCachePrincipal;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.io.Serializable;
  * @version 2019/5/22
  * @since JDK1.7
  */
+@Data
 public class MyPrincipal implements Serializable, AuthCachePrincipal {
 
 
@@ -28,21 +30,7 @@ public class MyPrincipal implements Serializable, AuthCachePrincipal {
 
     private String password;
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private Integer id;
 
     @Override
     public String getAuthCacheKey() {

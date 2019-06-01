@@ -7,16 +7,18 @@
  */
 package com.boot.web.module.role.service.impl;
 
-import com.boot.web.mapper.YidaPrivilegeTMapper;
-import com.boot.web.mapper.YidaRoleTMapper;
-import com.boot.web.module.pojo.YidaPrivilegeT;
-import com.boot.web.module.pojo.YidaRoleT;
+
+import com.boot.web.mapper.SysMenuMapper;
+import com.boot.web.mapper.SysRoleMapper;
+import com.boot.web.module.entity.SysMenu;
+import com.boot.web.module.entity.SysRole;
 import com.boot.web.module.role.service.IRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
+
 
 /**
  * 〈一句话功能简述〉
@@ -29,19 +31,19 @@ import java.util.List;
 @Service
 @Transactional
 public class RoleServiceImpl implements IRoleService {
-
-    @Resource
-    YidaRoleTMapper yidaRoleTMapper;
-    @Resource
-    YidaPrivilegeTMapper yidaPrivilegeTMapper;
+    @Autowired
+    private SysRoleMapper roleMapper;
+    @Autowired
+    private SysMenuMapper menuMapper;
 
     @Override
-    public List<YidaPrivilegeT> getPrivilegeListByUserId(String userId) {
-        return yidaPrivilegeTMapper.getPrivilegeListByUserId(userId);
+    public List<SysRole> getRoleByUserId(Integer userId) {
+        return roleMapper.getRoleByUserId(userId);
     }
 
     @Override
-    public List<YidaRoleT> getRoleListByUserId(String userId) {
-        return yidaRoleTMapper.getRoleListByUserId(userId);
+    public List<SysMenu> getPermissionsByRoleId(Integer roleId) {
+        return menuMapper.getPermissionsByRoleId(roleId);
     }
+
 }

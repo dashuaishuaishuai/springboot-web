@@ -7,7 +7,7 @@
  */
 package com.boot.web.module.user.service;
 
-import com.boot.web.module.pojo.YidaUserT;
+import com.boot.web.module.entity.SysUser;
 
 /**
  * 〈一句话功能简述〉
@@ -18,5 +18,4 @@ import com.boot.web.module.pojo.YidaUserT;
  * @since JDK1.7
  */
 public interface IUserService {
-    YidaUserT getUserInfoByCount(String account);
-}
+    SysUser findByUsername(String username);}

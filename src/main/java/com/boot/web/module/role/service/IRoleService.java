@@ -7,8 +7,8 @@
  */
 package com.boot.web.module.role.service;
 
-import com.boot.web.module.pojo.YidaPrivilegeT;
-import com.boot.web.module.pojo.YidaRoleT;
+import com.boot.web.module.entity.SysMenu;
+import com.boot.web.module.entity.SysRole;
 
 import java.util.List;
 
@@ -22,8 +22,7 @@ import java.util.List;
  */
 public interface IRoleService {
 
-    List<YidaPrivilegeT> getPrivilegeListByUserId(String userId);
-
-    List<YidaRoleT> getRoleListByUserId(String userId);
+    List<SysRole> getRoleByUserId(Integer userId);
+    List<SysMenu> getPermissionsByRoleId(Integer roleId);
 
 }

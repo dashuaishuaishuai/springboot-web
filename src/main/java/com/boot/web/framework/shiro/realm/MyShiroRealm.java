@@ -1,9 +1,9 @@
 package com.boot.web.framework.shiro.realm;
 
 import com.boot.web.framework.shiro.pojo.MyPrincipal;
-import com.boot.web.module.pojo.YidaPrivilegeT;
-import com.boot.web.module.pojo.YidaRoleT;
-import com.boot.web.module.pojo.YidaUserT;
+import com.boot.web.module.entity.SysMenu;
+import com.boot.web.module.entity.SysRole;
+import com.boot.web.module.entity.SysUser;
 import com.boot.web.module.role.service.IRoleService;
 import com.boot.web.module.user.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +41,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         String loginNo = (String) super.getAvailablePrincipal(principals);
+        SysUser userInfo = userService.findByUsername(loginNo);
         List<String> roleCodes = new ArrayList<String>();
         List<String> permissionLists = new ArrayList<String>();
         if (loginNo != null) {
@@ -48,15 +49,16 @@ public class MyShiroRealm extends AuthorizingRealm {
             /**
              * 查询用户有哪些角色
              */
-            List<YidaRoleT> roles = roleService.getRoleListByUserId(loginNo);
+            List<SysRole> roles = roleService.getRoleByUserId(userInfo.getId());
             if (roles != null && roles.size() > 0) {
-                roles.forEach(item -> roleCodes.add(item.getRoleId()));
+                roles.forEach(item -> {
+                    roleCodes.add(item.getValue());
+                    List<SysMenu> privilegeTS = roleService.getPermissionsByRoleId(item.getId());
+                    if (privilegeTS != null && privilegeTS.size() > 0) {
+                        privilegeTS.forEach(it -> permissionLists.add(item.getValue()));
+                    }
+                });
             }
-            List<YidaPrivilegeT> privilegeTS = roleService.getPrivilegeListByUserId(loginNo);
-            if (privilegeTS != null && privilegeTS.size() > 0) {
-                privilegeTS.forEach(item -> permissionLists.add(item.getPrivilegeName()));
-            }
-
         } else {
             log.info("The login username is null");
             throw new AuthorizationException();
@@ -70,7 +72,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
         log.info("The login username is null");
-        YidaUserT userInfo = userService.getUserInfoByCount(username);
+        SysUser userInfo = userService.findByUsername(username);
         if (userInfo == null) {
             return null;
         }
@@ -79,8 +81,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         session.removeAttribute("userInfo");
         session.setAttribute("userInfo", userInfo);
         MyPrincipal principal = new MyPrincipal();
-        principal.setAccount(userInfo.getAccount());
+        principal.setAccount(userInfo.getUsername());
         principal.setPassword(userInfo.getPassword());
+        principal.setId(userInfo.getId());
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principal,
                 userInfo.getPassword(), //密码
                 username  //realm name
